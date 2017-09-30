@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Http\Controllers\publicaciones;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use App\Models\Categoria;
+
+use App\Models\Post;
+use Auth;
+use Carbon\Carbon;
+use App\Models\Archivo;
+class Publicaciones extends Controller
+{
+
+    public function index(){
+    	return view('modulos.publicaciones.index', [
+    			'posts' => Post::where('edo_reg', 1)->orderBy('created_at', 'DESC')->paginate(15)
+    		]);
+    }
+
+    public function ver($req, $slug){
+    	$post = Post::where('slug', $slug)->first();
+    	if($post){
+    		if($post->edo_reg == 1)
+    			return view('modulos.publicaciones.ver', ['post' => $post]);
+    		else
+    			return redirect()
+		    			->to( url('dashboard/publicaciones') )
+		    			->with('error', 'ESTA PUBLICACION HA SIDO ELIMINADA O ANULADA, INTENTA CON OTRA');
+    	}
+
+    	return redirect()
+    			->to( url('dashboard/publicaciones') )
+    			->with('error', 'LA PUBLICACION QUE INTENTA VISUALIZAR NO EXISTE O HA SIDO ELIMINADA, INTENTE CON OTRA');
+    }
+
+    public function salvar($req){
+    	 \DB::beginTransaction();
+    	 try {
+	    	if(Auth::check() && Auth::user()->tipo_usuario == 'ADMIN'){
+
+	    		$post = new Post($req->all());
+	    		if($post->save()){
+	    			if($req->hasFile('archivo')){
+	    				$nombre = '';
+	    				foreach($req->file('archivo') as $key => $archivo)
+	    				{
+	    					$nombre = md5(Carbon::now()->format('Y-m-d h:i:s A'));
+		    				$data = [
+		    					'extension' => $archivo->getClientOriginalExtension(),
+		    					'nombre_original' => $archivo->getClientOriginalName(),
+		    					'nombre_archivo' => $nombre,
+		    					'ruta' => 'images/uploads/',
+		    					'tamano' => $archivo->getClientSize(),
+		    					'post_id' => $post->id,
+		    					'tipo_archivo' => $archivo->getClientMimeType()
+		    				];
+		    				$guardar_archivo = new Archivo($data);
+
+		    				if($guardar_archivo->save()){
+		    					if(!( $archivo->move('images/uploads', $guardar_archivo->nombre_archivo.'.'.$guardar_archivo->extension) )){
+		    						throw new \Exception("ERROR AL PROCESAR EL ARCHIVO", 1);
+		    						
+		    					}
+		    				}
+	    				}
+	    			}
+	    			\DB::commit();
+	    			return redirect()
+	    				->to( url('dashboard/publicaciones/publicaciones/mis_publicaciones') )
+	    				->with('correcto', 'EL REGISTRO SE HA LOGRADO GUARDAR DE MANERA EXITOSA');
+	    		}
+	    	}
+	    	throw new \Exception("USTED NO POSEE LOS PERMISOS NECESARIOS PARA INGRESAR A ESTA URL", 1);
+    	 } catch (\Exception $e) {
+    	 	\DB::rollback();
+    	 	return redirect()
+	    			->to( url('dashboard/publicaciones/publicaciones/mis_publicaciones') )
+	    			->with('error', 'ERROR: '.$e->getMessage());
+    	 }
+    }
+    public function nueva($req){
+    	if( Auth::check() && Auth::user()->tipo_usuario == 'ADMIN' ){
+    		return view('modulos.publicaciones.crear', [
+    				'categorias' => Categoria::where('edo_reg', 1)->get()
+    			]);
+    	}
+    	return redirect()
+    			->to( url('dashboard/publicaciones/publicaciones/mis_publicaciones' ) ) 
+    			->with('error', 'ERROR: PUEDE QUE USTED NO POSEA PERMISOS PARA REALIZAR ESTA ACCION, VERIFIQUE TAMBIEN QUE SU SESSION EN EL SISTEMA ESTE ACTIVA');
+    }
+
+    public function mis_publicaciones($req){
+
+    	if(Auth::user()->tipo_usuario == 'ADMIN'){
+    		$posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+	    	return view('modulos.publicaciones.listar', [
+	    			'posts' => $posts
+	    		]);
+    	}
+
+	    return redirect()
+    			->to( url('dashboard/publicaciones') )
+    			->with('error', 'USTED NO POSEE LOS PERMISOS NECESARIOS PARA INGRESAR A ESTE APARTADO');
+    }
+
+    public function eliminar($req){
+
+    	if(Auth::check() && Auth::user()->tipo_usuario=='ADMIN'){
+	    	$post = Post::where('id', $req->id)
+	    					->where('user_id', Auth::user()->id)->first();
+
+	    	if($post){
+		    	$post->edo_reg = 0;
+		    	if($post->save()){
+		    		return response([
+		    				'error' => false,
+		    				'mensaje' => 'REGISTRO ELIMINADO SATISFACTORIAMENTE'
+		    			], 200)->header('Content-Type', 'application/json');
+		    	}
+		    }
+	    }
+	    return response([
+	    		'error' => true,
+	    		'mensaje' => 'ERROR AL INTENTAR ELIMINAR EL REGISTRO: COMPRUEBE QUE TIENE UNA SECCION ACTIVA EN EL SISTEMA Y DE TENER EL PERMISO PARA ELIMINAR'
+	    	], 200)->header('Content-Type', 'application/json');
+    }
+
+
+    public function descargar($req){
+    	$post = Post::find($req->publicacion);
+    	if($post && $post->edo_reg != 0){
+    		$archivo = $post->archivos()->where('id', $req->archivo_id)->first();
+    		$headers = [
+    			'Content-Type' => $archivo->tipo_archivo,
+    		];
+
+    		$ruta = public_path('images/uploads/'.$archivo->nombre_archivo.'.'.$archivo->extension);
+    		return response()->download($ruta, $archivo->nombre_original, $headers);
+    	}
+    	return redirect()
+    			->to( url('dashboard/publicaciones/publicaciones/ver/'.$post->slug) )
+    			->with('error','EL ARCHIVO QUE INTENTA DESCARGAR NO EXISTE, O EL POST HA SIDO RETIRADO');
+    }
+}

@@ -124,174 +124,26 @@
                         </ul>
                     </li>
                    @endif
-                    @if(Auth::user()->tipo_usuario == 'ADMIN')
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">settings_applications</i>
-                            <span>Configuracion</span>
+                            <i class="material-icons">local_post_office</i>
+                            <span>Publicaciones</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{{ url('dashboard/configuracion/proveedores') }}">
-                                    Proveedores
+                                <a href="{{ url('dashboard/publicaciones') }}">
+                                    Publicaciones
                                 </a>
                             </li>
+                            @if(Auth::user()->tipo_usuario == 'ADMIN')
                             <li>
-                                <a href="{{ url('dashboard/configuracion/cargos') }}">
-                                    Cargos
+                                <a href="{{ url('dashboard/publicaciones/publicaciones/mis_publicaciones') }}">
+                                    Mis publicaciones
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/unidades') }}">Unidades de medida</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/centros') }}">Centros de costos</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/etapas') }}">Etapas de produccion</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/diciplinas') }}">Diciplinas</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/tipos') }}">Tipos de materiales</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/bancos') }}">Bancos</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/ubicaciones') }}">Ubicaciones</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/fabricantes') }}">Fabricantes</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/distribuidores') }}">Distribuidores</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/configuracion/vehiculos') }}">Vehiculos</a>
-                            </li>
+                            @endif
                         </ul>
                     </li>
-                   @endif
-                    @if(Auth::user()->tipo_usuario == 'ADMIN' || Auth::user()->tipo_usuario == 'NOMINA')
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">assignment_ind</i>
-                            <span>Nomina</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ url('dashboard/nomina/personal') }}">
-                                    Personal
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/nomina/ajustes') }}">
-                                    Ajustes
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/nomina') }}">Nominas</a>
-                            </li>
-                        </ul>
-                    </li>
-                   @endif
-                    @if(Auth::user()->tipo_usuario == 'ADMIN' || Auth::user()->tipo_usuario == 'TRANSPORTE')
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">assignment_ind</i>
-                            <span>Transporte y carga</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ url('dashboard/viajes/registrar') }}">
-                                    Registrar viaje/flete
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/viajes/registrar/registro') }}">
-                                    Registro
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                   @endif
-                   @if(Auth::user()->tipo_usuario == 'ADMIN' || Auth::user()->tipo_usuario == 'REQUSICION')
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">add_shopping_cart</i>
-                            <span>Requisiciones</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ url('dashboard/requisicion/requisicion/emitir') }}">
-                                    Emitir requisicion
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/requisicion/requisicion') }}">
-                                    Ver requisiciones
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    @endif
-                   @if(Auth::user()->tipo_usuario == 'ADMIN' || Auth::user()->tipo_usuario == 'INVENTARIO')
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">content_paste</i>
-                            <span>Inventario</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ url('dashboard/inventario/inventario') }}">
-                                    Ver inventario
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    @endif
-                   @if(Auth::user()->tipo_usuario == 'ADMIN' || Auth::user()->tipo_usuario == 'PROCURA')
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">shopping_cart</i>
-                            <span>Compras</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ url('dashboard/compras/invitaciones') }}">
-                                    Generar invitaciones a cotizar
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/compras/cotizaciones/registrar') }}">
-                                    Rigistrar cotizaciones
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/compras/Analisis/analisis') }}">
-                                    Analisis
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/compras/Ordenes/emitir') }}">
-                                    Emitir
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/compras/Ordenes/ordenes') }}">
-                                    Listado de ordenes de compras / servicios
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('dashboard/compras/analisis/listado') }}">
-                                    Listado de analisis de cotizacion
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    @endif
                 </ul>
             </div>
             <!-- #Menu -->

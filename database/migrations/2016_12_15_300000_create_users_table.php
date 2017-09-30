@@ -18,11 +18,14 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('remember_token', 255)->nullable();
-            $table->enum('tipo_usuario', ['INVITADO','ADMIN', 'NOMINA', 'REQUISICIONES', 'TRANSPORTE', 'INVENTARIO', 'PROCURA'])
-                    ->default('INVITADO');
-                    
-            $table->tinyInteger('edo_reg')->default(1);
-            $table->integer('persona_id')->nullable()->unsigned();
+            $table->string('nombre', 170)->nullable();
+            $table->string('apellido', 170)->nullable();
+            $table->smallInteger('edo_reg')->default(1);
+
+            $table->enum('tipo_usuario', [
+                    'ADMIN',
+                    'USER'
+                ]);
             
             $table->timestamps();
         });

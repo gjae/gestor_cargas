@@ -8054,3 +8054,9 @@ html.ie11 .bs-searchbox .form-control {
 .cifras{
   text-align: left;
 }
+
+.date-post{
+  color: #c9c9c9;
+  font-size: 12px;
+  font-style: italic;
+}
