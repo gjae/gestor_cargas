@@ -34,4 +34,20 @@ class User extends Authenticatable
     public function categorias(){
         return $this->hasMany('App\Models\Categoria');
     }
+
+    public function getTipoUsuarioAttribute($tipo){
+        switch ($tipo) {
+            case 'ADMIN':
+                return 'ADMINISTRADOR';
+                break;
+            
+            case 'USER':
+               return 'USUARIO';
+                break;
+        }
+    }
+
+    public function setPasswordAttribute($viejo){
+        $this->attributes['password'] = bcrypt($viejo);
+    }
 }

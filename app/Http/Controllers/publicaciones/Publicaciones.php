@@ -39,7 +39,7 @@ class Publicaciones extends Controller
     public function salvar($req){
     	 \DB::beginTransaction();
     	 try {
-	    	if(Auth::check() && Auth::user()->tipo_usuario == 'ADMIN'){
+	    	if(Auth::check() && Auth::user()->tipo_usuario == 'ADMINISTRADOR'){
 
 	    		$post = new Post($req->all());
 	    		if($post->save()){
@@ -82,7 +82,7 @@ class Publicaciones extends Controller
     	 }
     }
     public function nueva($req){
-    	if( Auth::check() && Auth::user()->tipo_usuario == 'ADMIN' ){
+    	if( Auth::check() && Auth::user()->tipo_usuario == 'ADMINISTRADOR' ){
     		return view('modulos.publicaciones.crear', [
     				'categorias' => Categoria::where('edo_reg', 1)->get()
     			]);
@@ -94,7 +94,7 @@ class Publicaciones extends Controller
 
     public function mis_publicaciones($req){
 
-    	if(Auth::user()->tipo_usuario == 'ADMIN'){
+    	if(Auth::user()->tipo_usuario == 'ADMINISTRADOR'){
     		$posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
 	    	return view('modulos.publicaciones.listar', [
 	    			'posts' => $posts
@@ -108,7 +108,7 @@ class Publicaciones extends Controller
 
     public function eliminar($req){
 
-    	if(Auth::check() && Auth::user()->tipo_usuario=='ADMIN'){
+    	if(Auth::check() && Auth::user()->tipo_usuario=='ADMINISTRADOR'){
 	    	$post = Post::where('id', $req->id)
 	    					->where('user_id', Auth::user()->id)->first();
 

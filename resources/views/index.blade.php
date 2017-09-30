@@ -89,7 +89,8 @@
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="{{ url('logout') }}"><i class="material-icons">input</i>Desconectar</a></li>
+                            <li><a href="{{ url('dashboard/usuarios/usuarios/logout') }}"><i class="material-icons">input</i>Desconectar</a></li>
+                            <li><a href="{{ url('dashboard/usuarios/usuarios/actualizar') }}"><i class="material-icons">input</i>Mi cuenta</a></li>
                         </ul>
                     </div>
                 </div>
@@ -111,7 +112,7 @@
                             <span>Typography</span>
                         </a>
                     </li> -->
-                     @if(Auth::user()->tipo_usuario == 'ADMIN')
+                     @if(Auth::user()->tipo_usuario == 'ADMINISTRADOR')
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">widgets</i>
@@ -119,7 +120,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="#">Usuarios del sistema</a>
+                                <a href="{{ url('dashboard/usuarios') }}">Usuarios del sistema</a>
                             </li>
                         </ul>
                     </li>
@@ -135,10 +136,15 @@
                                     Publicaciones
                                 </a>
                             </li>
-                            @if(Auth::user()->tipo_usuario == 'ADMIN')
+                            @if(Auth::user()->tipo_usuario == 'ADMINISTRADOR')
                             <li>
                                 <a href="{{ url('dashboard/publicaciones/publicaciones/mis_publicaciones') }}">
                                     Mis publicaciones
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('dashboard/categorias') }}">
+                                    Categorias
                                 </a>
                             </li>
                             @endif
