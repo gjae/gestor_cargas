@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function setPasswordAttribute($viejo){
         $this->attributes['password'] = bcrypt($viejo);
     }
+
+    public function posts_autorizados(){
+        return $this->hasMany('App\Models\PostUser');
+    }
 }

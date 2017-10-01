@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use App\Models\Categoria;
+use App\Models\PostUser;
 
 use App\Models\Post;
 use Auth;
@@ -15,16 +16,78 @@ class Publicaciones extends Controller
 {
 
     public function index(){
-    	return view('modulos.publicaciones.index', [
-    			'posts' => Post::where('edo_reg', 1)->orderBy('created_at', 'DESC')->paginate(15)
-    		]);
+        $posts = Post::where('posts.edo_reg', 1);
+        if(true){
+            $posts = $posts->where('post_user.edo_reg', 1)
+                    ->where('post_user.user_id', Auth::user()->id)
+                    ->join('post_user', 'post_user.post_id', 'posts.id')
+                    ->join('users', 'users.id', 'post_user.user_id')
+                    ->select('posts.*');
+
+        }
+        //return dd( $posts->orderBy('posts.created_at', 'DESC')->paginate(15)[0] );
+        return view('modulos.publicaciones.index', [
+                'posts' => $posts->orderBy('posts.created_at', 'DESC')->paginate(15)
+            ]);
     }
+
+  public function formulario($req){
+        try {
+            //return dd($req->all());
+            $vista = \View::make('modulos.publicaciones.formularios.'.$req->form, [
+                    'id' => $req->id
+                ])->render();
+
+
+            return response([
+                    'error' => false,
+                    'formulario' => $vista,
+                    'action' => url('dashboard/publicaciones/publicaciones/database'),
+                ], 200)->header('Content-Type', 'application/json');
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+   }
+
+  public function database($req){
+        return call_user_func_array([$this, $req->accion], [$req]);
+   }
+
+   private function autorizar($req){
+        if(Auth::check() && Auth::user()->tipo_usuario == 'ADMINISTRADOR'){
+            $auth = new PostUser($req->all());
+            if( $auth->save() ){
+                return redirect()
+                        ->to( url('dashboard/publicaciones') )
+                        ->with('correcto', 'SE HA PROCESADO LA AUTORIZACION SATISFACTORIAMENTE');
+            }
+            return redirect()
+                    ->to( url('dashboard/publicaciones') )
+                    ->with('error', 'ERROR AL INTENTAR PROCESAR LA AUTORIZACION');
+        }
+        return redirect()
+                ->to( url('dashboard/publicaciones') )
+                ->with('error', 'ERROR: NO POSEE PERMISOS PARA REALIZAR ESTA ACCION');
+   }
 
     public function ver($req, $slug){
     	$post = Post::where('slug', $slug)->first();
     	if($post){
-    		if($post->edo_reg == 1)
-    			return view('modulos.publicaciones.ver', ['post' => $post]);
+
+            $autorizado = $post->usuarios_autorizados()
+                                ->where('user_id', Auth::user()->id)
+                                ->first();
+
+    		if($post->edo_reg == 1){
+                
+                if( Auth::user()->tipo_usuario == 'ADMINISTRADOR' || $autorizado )
+    			     return view('modulos.publicaciones.ver', ['post' => $post]);
+                else
+                    redirect()
+                    ->to( url('dashboard/publicaciones') )
+                    ->with('error', 'USTED NO ESTA AUTORIZADO A REVISAR ESTA PUBLICACION');
+            }
     		else
     			return redirect()
 		    			->to( url('dashboard/publicaciones') )

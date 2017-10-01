@@ -13,6 +13,9 @@
     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <img src="{{ app('config')->get('app')['url'].'/images/user-img-background.jpg' }}" alt="" class="img-responsive">
+        </div>
+        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Inicio de sesion</div>
 

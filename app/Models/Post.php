@@ -39,4 +39,8 @@ class Post extends Model
     public function archivos(){
     	return $this->hasMany('App\Models\Archivo');
     }
+
+    public function usuarios_autorizados(){
+        return $this->hasMany('App\Models\PostUser');
+    }
 }

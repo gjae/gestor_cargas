@@ -3,7 +3,10 @@ $(document).ready(function(){
 		var url = location.protocol+'//'+location.host+'/dashboard/'+$("#modulo").val()+'/'+$("#programa").val()+'/formulario?form='+$(this).attr('formulario')
 		
 		var id = 0;
-		if( $(this).attr('formulario') == 'editar_usuario' ||  $(this).attr('formulario') == 'editar_categoria')
+		if( $(this).attr('formulario') == 'editar_usuario'   ||  
+			$(this).attr('formulario') == 'editar_categoria' ||
+			$(this).attr('formulario') == 'autorizar_post'
+		)
 			id = $(this).attr('data-id')
 
 		$.getJSON(url+'&id='+id, {}, function(resp){
