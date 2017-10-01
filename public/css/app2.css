@@ -1,0 +1,32 @@
+body{
+	background-color: #000;
+    background-image: url('../images/user-img-background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.panel {
+    margin-bottom: 22px;
+    background-color: #05040433;
+    border: 1px solid #0f0f0f1a;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px #0f0f0f1a;
+    color: #fff;
+}
+
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #05040433;
+    border-color: #d3e0e9;
+    color: #fff;
+}
+
+.navbar-default {
+    background-color: #060505;
+    border-color: #4d5357;
+    color: #fff;
+}
+
+.navbar-default .navbar-brand {
+    color: #95cdd1cc;
+}
