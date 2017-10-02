@@ -15,6 +15,7 @@ class Archivo extends Model
     	'tamano',
     	'post_id',
     	'extension'
+        'slug'
     ];
     private $extensiones = [
     	'png', 'PNG',

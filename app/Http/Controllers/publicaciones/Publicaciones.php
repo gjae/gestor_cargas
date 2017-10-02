@@ -17,7 +17,7 @@ class Publicaciones extends Controller
 
     public function index(){
         $posts = Post::where('posts.edo_reg', 1);
-        if(true){
+        if($posts){
             $posts = $posts->where('post_user.edo_reg', 1)
                     ->where('post_user.user_id', Auth::user()->id)
                     ->join('post_user', 'post_user.post_id', 'posts.id')
@@ -200,7 +200,7 @@ class Publicaciones extends Controller
     			'Content-Type' => $archivo->tipo_archivo,
     		];
 
-    		$ruta = public_path('images/uploads/'.$archivo->nombre_archivo.'.'.$archivo->extension);
+    		$ruta = base_path('public/images/uploads/'.$archivo->nombre_archivo.'.'.$archivo->extension);
     		return response()->download($ruta, $archivo->nombre_original, $headers);
     	}
     	return redirect()
