@@ -7517,9 +7517,8 @@ fieldset[disabled] .form-control {
     white-space: nowrap;
     position: relative;
     border-bottom: 1px solid #e9e9e9;
-    background: url("../images/user-img-background-2.jpg") no-repeat no-repeat;
+    background: url("../images/fondo.png") no-repeat no-repeat;
     height: 135px; 
-    background-size: 310px 150px;
     }
     .sidebar .user-info .image {
       margin-right: 12px;
