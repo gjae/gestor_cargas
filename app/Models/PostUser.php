@@ -15,7 +15,7 @@ class PostUser extends Model
 
 
     public function usuario(){
-    	return $this->belongsTo('App\User');
+    	return $this->belongsTo('App\User', 'user_id');
     }
 
     public function post(){

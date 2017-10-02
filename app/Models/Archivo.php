@@ -14,7 +14,7 @@ class Archivo extends Model
     	'nombre_archivo',
     	'tamano',
     	'post_id',
-    	'extension'
+    	'extension',
         'slug'
     ];
     private $extensiones = [

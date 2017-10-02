@@ -84,6 +84,13 @@
 												>
 													AUTORIZAR USUARIOS
 												</a>
+												<a  
+													class="btn btn-warning formularios" 
+													formulario="retirar_autorizacion"
+													data-id="{{ $post->id }}"
+												>
+													DESAUTORIZAR USUARIOS
+												</a>
 											</td>
 										</tr>
 									@endforeach

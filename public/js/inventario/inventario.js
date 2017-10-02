@@ -5,7 +5,9 @@ $(document).ready(function(){
 		var id = 0;
 		if( $(this).attr('formulario') == 'editar_usuario'   ||  
 			$(this).attr('formulario') == 'editar_categoria' ||
-			$(this).attr('formulario') == 'autorizar_post'
+			$(this).attr('formulario') == 'autorizar_post'   ||
+			$(this).attr('formulario') == 'retirar_autorizacion'
+
 		)
 			id = $(this).attr('data-id')
 
