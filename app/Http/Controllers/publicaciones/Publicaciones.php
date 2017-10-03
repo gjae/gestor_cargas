@@ -35,20 +35,21 @@ class Publicaciones extends Controller
         if(Auth::check() && Auth::user()->tipo_usuario == 'ADMINISTRADOR' ){
             $posts = PostUser::where('post_id', $req->post_id)
                             ->where('user_id', $req->user_id)
+                            ->where('edo_reg', 1)
                             ->get();
 
             foreach ($posts as $key => $post) {
                 $post->edo_reg = 0;
                 if(! $post->save()){
                     return redirect()
-                            ->to( url( 'dashboard/publicaciones/mis_publicaciones' ) )
+                            ->to( url( 'dashboard/publicaciones/publicaciones/mis_publicaciones' ) )
                             ->with('error', 'ERRPR AL INTENTAR REMOVER EL PERMISO DE VISUALIZACION AL USUARIO');
                     
                 }
             }
 
             return redirect()
-                    ->to( url('dashboard/publicaciones/mis_publicaciones') )
+                    ->to( url('dashboard/publicaciones/publicaciones/mis_publicaciones') )
                     ->with('correcto', 'SE HA REMOVIDO EL PERMISO AL USUARIO PARA VISUALIZAR LA PUBLICACION');
         }
 
@@ -85,11 +86,11 @@ class Publicaciones extends Controller
             $auth = new PostUser($req->all());
             if( $auth->save() ){
                 return redirect()
-                        ->to( url('dashboard/publicaciones/mis_publicaciones') )
+                        ->to( url('dashboard/publicaciones/publicaciones/mis_publicaciones') )
                         ->with('correcto', 'SE HA PROCESADO LA AUTORIZACION SATISFACTORIAMENTE');
             }
             return redirect()
-                    ->to( url('dashboard/publicaciones/mis_publicaciones') )
+                    ->to( url('dashboard/publicaciones/publicaciones/mis_publicaciones') )
                     ->with('error', 'ERROR AL INTENTAR PROCESAR LA AUTORIZACION');
         }
         return redirect()

@@ -8,7 +8,17 @@
 			<select name="user_id" id="user" class="form-control" required>
 				<option value="">-- SELECCIONE UNO --</option>
 				@foreach(App\User::where('edo_reg', 1)->get() as $user)
+					@php
+						$tiene = App\Models\PostUser::where('post_id', $id)
+												->where('user_id', $user->id)
+												->where('edo_reg', 1)->get();
+
+						if( count($tiene) > 0 ){
+							continue;
+						}
+					@endphp					
 					<option value="{{ $user->id }}">
+
 						{{ $user->nombre.' '.$user->apellido  }} ( {{ $user->email }} )
 					</option>
 				@endforeach

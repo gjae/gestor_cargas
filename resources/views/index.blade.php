@@ -14,22 +14,22 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
-    <link href="{{ asset('plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link href="{{ asset('plugins/node-waves/waves.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/plugins/node-waves/waves.css') }}" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link href="{{ asset('plugins/animate-css/animate.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/plugins/animate-css/animate.css') }}" rel="stylesheet" />
 
     <!-- Morris Chart Css-->
-    <link href="{{ asset('plugins/morrisjs/morris.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/plugins/morrisjs/morris.css') }}" rel="stylesheet" />
 
     <!-- Custom Css -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="{{ asset('css/themes/theme-green.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/css/themes/theme-green.css') }}" rel="stylesheet" />
 
     @section('css')
     @show
@@ -179,18 +179,18 @@
     </section>
 
     <!-- Jquery Core Js -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/jquery/jquery.min.js') }}"></script>
 
     <!-- Bootstrap Core Js -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('public/plugins/bootstrap/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('public/plugins/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
     <!-- Waves Effect Plugin Js -->
-    <script src="{{ asset('plugins/node-waves/waves.js') }}"></script>
+    <script src="{{ asset('public/plugins/node-waves/waves.js') }}"></script>
 
-    <script src="{{ asset('plugins/morrisjs/morris.js') }}"></script>
+    <script src="{{ asset('public/plugins/morrisjs/morris.js') }}"></script>
 
     <!-- Custom Js -->
-    <script src="{{ asset('js/admin.js') }}"></script>
+    <script src="{{ asset('public/js/admin.js') }}"></script>
 
     @section('jquery')
     @show
