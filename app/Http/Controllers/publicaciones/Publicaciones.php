@@ -185,7 +185,7 @@ class Publicaciones extends Controller
     public function mis_publicaciones($req){
 
     	if(Auth::user()->tipo_usuario == 'ADMINISTRADOR'){
-    		$posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+    		$posts = Post::where('user_id', Auth::user()->id)->where('edo_reg', 1)->orderBy('created_at', 'DESC')->get();
 	    	return view('modulos.publicaciones.listar', [
 	    			'posts' => $posts
 	    		]);
