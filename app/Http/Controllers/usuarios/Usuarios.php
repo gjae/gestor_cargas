@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use Auth;
+use Mail;
 
 class Usuarios extends Controller
 {
@@ -51,6 +52,10 @@ class Usuarios extends Controller
 
    		$usuario = new User($req->all());
    		if( $usuario->save() ){
+            Mail::send('modulos.usuarios.emails.welcome', ['user' => $usuario], function($mail) use($usuario){
+                  $mail->from('contacto@cerocsas.com', 'Activar cuenta en CEROC');
+                  $mail->to($usuario->correo_electronico, $usuario->nombre)->subject('Activar cuenta de CEROC');
+            });
    			return redirect()
    					->to( url('dashboard/usuarios') )
    					->with('correcto', 'USUARIO CREADO EXITOSAMENTE');

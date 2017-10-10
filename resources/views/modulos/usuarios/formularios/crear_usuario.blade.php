@@ -1,6 +1,7 @@
 <div class="container">
 	<div class="row">
 		<input type="hidden" name="accion" value="guardar" id="accion">
+		<input type="hidden" name="active_token" value="{{ csrf_token() }}">
 		{{ csrf_field() }}
 		<div class="col-sm-12 col-md-4 col-lg-4">
 			<label for="">NOMBRE(s)</label>
@@ -14,11 +15,15 @@
 	</div>
 
 	<div class="row">
-		<div class="col-sm-12 col-lg-4 col-md-4">
+		<div class="col-sm-12 col-lg-3 col-md-3">
 			<label for="">NOMBRE DE USUARIO</label>
 			<input type="text" maxlength="100" class="form-control" required name="email" id="email">
 		</div>
-		<div class="col-sm-12 col-lg-4 col-md-4">
+		<div class="col-sm-12 col-lg-3 col-md-3">
+			<label for="">Correo</label>
+			<input type="email" class="form-control" name="correo_electronico" required="Debe completar el correo electronico" id="correo_electronico" placeholder="Indique un correo electronico">
+		</div>
+		<div class="col-sm-12 col-lg-3 col-md-3">
 			<label for="">TIPO DE USUARIO</label>
 			<select name="tipo_usuario" required id="tipo_usuario" class="form-control">
 				<option value="">-- SELECCIONE UNA --</option>
@@ -29,12 +34,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12 col-lg-4 col-md-4">
-			<label for="">INGRESE UNA CLAVE</label>
-			<input type="password" minlength="6" maxlength="12" required name="password" class="form-control" id="password_1">
-		</div>
-		<div class="col-sm-12 col-lg-4 col-md-4">
-			<label for="">REPITA LA CLAVE</label>
-			<input type="password" minlength="6" maxlength="12" required name="password2" class="form-control" id="password_2">
+			<input type="hidden" value="{{ csrf_token() }}" minlength="6" maxlength="12" required name="password" class="form-control" id="password_1">
 		</div>
 	</div>
 </div>
