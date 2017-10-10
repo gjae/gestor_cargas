@@ -149,6 +149,19 @@
                             @endif
                         </ul>
                     </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">local_post_office</i>
+                            <span>Solicitudes</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{{ url('dashboard/solicitudes') }}">
+                                    Solicitud 
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!-- #Menu -->

@@ -62,4 +62,8 @@ class User extends Authenticatable
     public function posts_autorizados(){
         return $this->hasMany('App\Models\PostUser');
     }
+
+    public function solicitudes(){
+        return $this->hasMany('App\Models\Solicitud');
+    }
 }
