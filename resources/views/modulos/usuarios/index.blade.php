@@ -2,7 +2,7 @@
 
 @section('css')
  <!-- JQuery DataTable Css -->
-<link href="{{ asset('plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+<link href="{{ asset('public/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
 
 @endsection
 
@@ -113,18 +113,18 @@
 @endsection
 @section('jquery')
 <!-- Jquery DataTable Plugin Js -->
-<script src="{{ asset('plugins/jquery-datatable/jquery.dataTables.js') }}"></script>
-<script src="{{ asset('plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') }}"></script>
-<script src="{{ asset('plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('plugins/jquery-datatable/extensions/export/buttons.flash.min.js') }}"></script>
-<script src="{{ asset('plugins/jquery-datatable/extensions/export/jszip.min.js') }}"></script>
-<script src="{{ asset('plugins/jquery-datatable/extensions/export/pdfmake.min.js') }}"></script>
-<script src="{{ asset('plugins/jquery-datatable/extensions/export/vfs_fonts.js') }}"></script>
-<script src="{{ asset('plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
-<script src="{{ asset('js/inventario/inventario.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/extensions/export/buttons.flash.min.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/extensions/export/jszip.min.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/extensions/export/pdfmake.min.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/extensions/export/vfs_fonts.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('public/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
+<script src="{{ asset('public/js/inventario/inventario.js') }}"></script>
     <!-- Demo Js -->
-<script src="{{ asset('js/demo.js') }}"></script>
+<script src="{{ asset('public/js/demo.js') }}"></script>
 <script>
 $('#dataTables-example').DataTable({
     responsive: true

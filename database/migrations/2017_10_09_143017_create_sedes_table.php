@@ -13,9 +13,16 @@ class CreateSedesTable extends Migration
             $table->timestamps();
             $table->string('nombre_sede');
             $table->string('direccion_sede')->nullable();
-            $table->string('codigo_sede')->nullable();
+            $table->string('codigo_sede', 7)->nullable();
 
         });
+
+        foreach (['PRINCIPAL BUCARAMANGA','CONCHA ACUSTICA', 'CABECERA DEL LLANO', 'PIEDECUESTA'] as $key => $value) {
+           \DB::table('sedes')->insert([
+                'nombre_sede' => $value,
+                'codigo_sede' => '00000'.$key
+            ]);
+        }
     }
 
     /**

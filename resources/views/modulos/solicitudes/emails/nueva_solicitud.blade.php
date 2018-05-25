@@ -31,7 +31,16 @@
 				<strong>Asunto: {{ $req->asunto }}</strong><br>
 				<strong>Fecha registrada en el sistema: {{ $registro->created_at->format('d-m-Y h:m:i A') }}</strong><br>
 				<strong>Fecha solicitada: {{ $registro->fecha_solicitada->format('d-m-Y') }}</strong><br>
-				<strong>Descripcion: {{ $req->descripcion }}</strong>
+				<strong>Descripcion: {{ $req->descripcion }}</strong><br>
+				<strong>Telefono: {{ $req->telefono }}</strong><br>
+				<strong>Doctor: {{ $req->nombre_doctor.' '.$req->apellido_doctor }}</strong><br>
+				<strong>Radiografia Intraorales: {{ $req->radio_intraorales }}</strong><br>
+				<strong>Oclusal: {{ $req->oclusal }}</strong><br>
+				<strong>Foto clinica: {{ $req->foto_clinica }}</strong><br>
+				<strong>Otros servicios: {{ $req->otros_servicios }}</strong><br>
+				<strong>Paquete de ortodoncia: {{ $req->paquete_ortodoncia }}</strong><br>
+				<strong>Sede: {{ \DB::table('sedes')->where('id', $req->sede_id)->first()->nombre_sede }}</strong><br>
+
 			</p>
 		</td>
 	</tr>

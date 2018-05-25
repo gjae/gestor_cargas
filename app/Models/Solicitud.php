@@ -12,9 +12,21 @@ class Solicitud extends Model
     protected $table = 'solicitudes';
     protected $fillable = [
     	'descripcion',
-    	'asunto',
-    	'user_id',
-    	'fecha_solicitada'
+            'descripcion',
+            'asunto',
+            'fecha_solicitada',
+            'telefono',
+            'cc',
+            'nombre_doctor',
+            'apellido_doctor',
+            'radio_intraorales',
+            'oclusal',
+            'extraoral',
+            'foto_clinica',
+            'otros_servicios',
+            'paquete_ortodoncia',
+            'user_id',
+            'sede_id'
     ];
 
     protected $casts = [
