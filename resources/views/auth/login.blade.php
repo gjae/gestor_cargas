@@ -19,7 +19,7 @@
     </div>
     <div class="row">
        <div class="col-md-8 col-md-offset-2">
-            <img src="{{ app('config')->get('app')['url'].'/images/user-img-background4.jpeg' }}" alt="" class="img-responsive">
+            <img src="{{ asset('images/user-img-background4.jpeg') }}" alt="" class="img-responsive">
         </div>
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">

@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('categoria_id')->unsigned();
             $table->string('sluged')->nullable();
+            $table->string('slug')->nullable();
 
             $table->index(['sluged']);
             $table->foreign('user_id')->references('id')
