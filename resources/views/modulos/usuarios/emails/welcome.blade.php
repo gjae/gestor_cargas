@@ -12,7 +12,7 @@
 <body>
 <h1>Bienvenido</h1>
 <p>
-	Se ha procesado la creacion de tu usuario dentro del sistema de <strong>CEROC</strong>, unicamente resta activar tu cuenta desde <a href="{{ url('account/active?token='.$user->active_token) }}"> <strong>AQUI</strong> </a>. <br>
+	Se ha procesado la creacion de tu usuario dentro del sistema de <strong>PROCISAN</strong>, unicamente resta activar tu cuenta desde <a href="{{ url('account/active?token='.$user->active_token) }}"> <strong>AQUI</strong> </a>. <br>
 	usuario: <strong>{{ $user->email }}</strong> .<br>
 	usted debera ingresar una nueva clave al momento de activar su usuario.
 </p>
