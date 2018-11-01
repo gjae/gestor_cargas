@@ -53,8 +53,8 @@ class Usuarios extends Controller
    		$usuario = new User($req->all());
    		if( $usuario->save() ){
             Mail::send('modulos.usuarios.emails.welcome', ['user' => $usuario], function($mail) use($usuario){
-                  $mail->from('contacto@cerocsas.com', 'Activar cuenta en CEROC');
-                  $mail->to($usuario->correo_electronico, $usuario->nombre)->subject('Activar cuenta de CEROC');
+                  $mail->from('noreply@procisansas.com', 'Activar cuenta en la plataforma PROCISAN');
+                  $mail->to($usuario->correo_electronico, $usuario->nombre)->subject('Activar cuenta en la plataforma PROCISAN');
             });
    			return redirect()
    					->to( url('dashboard/usuarios') )
