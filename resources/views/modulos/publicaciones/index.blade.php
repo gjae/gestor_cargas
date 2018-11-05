@@ -29,6 +29,20 @@
 </div>
 
 </div>
+
+<div class="row">
+	<div class="col-sm-4 col-lg-4 col-md-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+		<form action="{{ url('dashboard/publicaciones') }}" method="get">
+			<div class="input-group">
+				
+				<span class="input-group-addon">
+					<button class="btn btn-success">Buscar</button>
+				</span>
+				<input type="text" class="form-control" name="p">
+			</div>
+		</form>
+	</div>
+</div>
 <div class="row clearfix">
 	<input type="hidden" id="token" value="{{ csrf_token() }}">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
