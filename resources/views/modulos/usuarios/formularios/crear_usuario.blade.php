@@ -21,7 +21,7 @@
 		</div>
 		<div class="col-sm-12 col-lg-3 col-md-3">
 			<label for="">Correo</label>
-			<input type="email" class="form-control" name="correo_electronico" required="Debe completar el correo electronico" id="correo_electronico" placeholder="Indique un correo electronico">
+			<input type="email" class="form-control" name="correo_electronico" id="correo_electronico" placeholder="Indique un correo electronico">
 		</div>
 		<div class="col-sm-12 col-lg-3 col-md-3">
 			<label for="">TIPO DE USUARIO</label>
