@@ -17,10 +17,11 @@ class Publicaciones extends Controller
 
     public function index(Request $request){
         $posts = Post::where('posts.edo_reg', 1);
+		$guard = is_string( $request->header('Authorization', false) ) ? 'api' : 'web';
 
         if($posts){
             $posts = $posts->where('post_user.edo_reg', 1)
-                    ->where('post_user.user_id', Auth::user()->id)
+                    ->where('post_user.user_id', auth( $guard )->user()->id)
                     ->join('post_user', 'post_user.post_id', 'posts.id')
                     ->join('users', 'users.id', 'post_user.user_id')
                     ->select('posts.*');
@@ -29,7 +30,15 @@ class Publicaciones extends Controller
 
         if( $request->has('p') && !empty($request->p) )
             $posts = $posts->where('titulo_post', 'LIKE', "%".$request->p."%");
-        //return dd( $posts->orderBy('posts.created_at', 'DESC')->paginate(15)[0] );
+		//return dd( $posts->orderBy('posts.created_at', 'DESC')->paginate(15)[0] );
+		
+		if( is_string( $request->header('Authorization', false) ) ){
+			return response()->json([
+				'error' => false,
+				'resultSet' => $posts->with(['usuario'])->orderBy('posts.created_at', 'DESC')->paginate(15),
+			], 200)->header('Content-Type', 'application/json');
+		}
+
         return view('modulos.publicaciones.index', [
                 'posts' => $posts->orderBy('posts.created_at', 'DESC')->paginate(15)
             ]);

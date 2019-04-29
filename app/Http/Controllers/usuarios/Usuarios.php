@@ -44,7 +44,6 @@ class Usuarios extends Controller
 
    private function guardar($req){
    		$usuario = User::where('email', $req->email)->first();
-
    		if( $usuario ){
    			return redirect()
    					->to( url('dashboard/usuarios') )
@@ -59,6 +58,7 @@ class Usuarios extends Controller
 
 		$usuario = new User($req->all());
 		$usuario->actived_at = new Carbon();
+		$usuario->correo_electronico = is_null( $req->correo_electronico ) ? $req->email : $req->correo_electronico;
 		$usuario->password = $req->clave;	
 		if( $usuario->save() ){
    			return redirect()
@@ -70,34 +70,60 @@ class Usuarios extends Controller
    		}
    }
 
+   public function edit( Request $request ){
+	   return $this->editar( $request );
+   }
+
    private function editar($req){
-       $complemento = (Auth::user()->tipo_usuario == 'USUARIO' ) ? '/usuarios/actualizar' :'';
-   	if( (Auth::check() && Auth::user()->tipo_usuario == 'ADMINISTRADOR' ) || $req->user_id == Auth::user()->id ){
+	
+	$guard = is_string( request()->header('Authorization', false) ) ? 'api' : 'web';
+
+	$complemento = (Auth::guard( $guard )->user()->tipo_usuario == 'USUARIO' ) ? '/usuarios/actualizar' :'';
+   	if( (Auth::guard($guard)->check() && Auth::guard($guard)->user()->tipo_usuario == 'ADMINISTRADOR' ) || $req->user_id == Auth::guard( $guard )->user()->id ){
 	   		$user = User::find($req->user_id);
 
 	   		$datos = [];
 	   		$user->nombre = $req->nombre;
 	   		$user->apellido = $req->apellido;
-            if(Auth::user()->tipo_usuario == 'ADMINISTRADOR')
+            if(Auth::user()->tipo_usuario == 'ADMINISTRADOR' && $guard != 'api' )
 	   		   $user->tipo_usuario = $req->tipo_usuario;
 
 	   		//$datos = $req->except(['_token', 'accion', 'password', 'password2', 'user_id']);
-	   		if( !is_null($req->password) )
+	   		if( !is_null($req->password) && $req->password != "" )
 	   		{
 	   			$user->password =  $req->password;
 	   		}
 
 	   		//ASI DE FACIL ES ACTUALIZAR
 	   		if( $user->save()){
-              
+				
+				if( $guard == 'api' ){
+					return response()->json( ['error' => false, 'message' => 'Success update'], 200);
+				}
+
 	   			return redirect()
    					->to( url('dashboard/usuarios'.$complemento) )
    					->with('correcto', 'LOS DATOS DEL REGISTRO HAN SIDO ACTUALIZADOS CORRECTAMENTE');
-	   		}
+			}
+			
+			if( $guard == 'api' ){
+				return response()->json([
+					'error' => true,
+					'message' => 'Not success'
+				], 200);
+			}
+			
 	   		return redirect()
    					->to( url('dashboard/usuarios'.$complemento) )
    					->with('error', 'ERROR AL INTENTAR ACTUALIZAR LOS DATOS DEL USUARIO');
-	   	}
+		}
+		
+		if( $guard == 'api' )
+			return response()->json([
+				'error' => true,
+				'message' => 'Inactive session'
+			], 200);
+
 	   	return redirect()
    				->to( url('dashboard/usuarios'.$complemento) )
    				->with('error', 'ERROR: VERIFIQUE QUE POSEE UNA SESSION ABIERTA Y QUE TENGA EL PERMISO CORRECTO PARA ESTA ACCION');
