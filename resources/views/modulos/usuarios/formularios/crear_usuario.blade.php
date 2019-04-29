@@ -33,6 +33,16 @@
 		</div>
 	</div>
 	<div class="row">
+		<div class="col-sm-4">
+			<label for="">Clave del usuario</label>
+			<input type="password" name="clave" required min="6" class="form-control">
+		</div>
+		<div class="col-sm-4">
+			<label for="">Repita la clave</label>
+			<input type="password" name="clave2" required min="6" class="form-control">
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-sm-12 col-lg-4 col-md-4">
 			<input type="hidden" value="{{ csrf_token() }}" minlength="6" maxlength="12" required name="password" class="form-control" id="password_1">
 		</div>

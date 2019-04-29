@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use Carbon\Carbon;
 use Auth;
 use Mail;
 
@@ -48,14 +49,18 @@ class Usuarios extends Controller
    			return redirect()
    					->to( url('dashboard/usuarios') )
    					->with('error', 'EL NOMBRE DE USUARIO QUE INTENTA INGRESAR YA EXISTE!');
-   		}
+		}
+		   
+		if( $req->clave != $req->clave2 ) 
+			return redirect()
+					->to( url('dashboard/usuarios') )
+					->with('error', 'LAS CLAVES SUMINISTRADAS NO SON IGUALES, VUELVA A INTENTARLO');
 
-   		$usuario = new User($req->all());
-   		if( $usuario->save() ){
-            Mail::send('modulos.usuarios.emails.welcome', ['user' => $usuario], function($mail) use($usuario){
-                  $mail->from('noreply@procisansas.com', 'Activar cuenta en la plataforma PROCISAN');
-                  $mail->to($usuario->correo_electronico, $usuario->nombre)->subject('Activar cuenta en la plataforma PROCISAN');
-            });
+
+		$usuario = new User($req->all());
+		$usuario->actived_at = new Carbon();
+		$usuario->password = $req->clave;	
+		if( $usuario->save() ){
    			return redirect()
    					->to( url('dashboard/usuarios') )
    					->with('correcto', 'USUARIO CREADO EXITOSAMENTE');

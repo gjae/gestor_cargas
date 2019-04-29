@@ -15,8 +15,9 @@ use App\Models\Archivo;
 class Publicaciones extends Controller
 {
 
-    public function index(){
+    public function index(Request $request){
         $posts = Post::where('posts.edo_reg', 1);
+
         if($posts){
             $posts = $posts->where('post_user.edo_reg', 1)
                     ->where('post_user.user_id', Auth::user()->id)
@@ -25,6 +26,9 @@ class Publicaciones extends Controller
                     ->select('posts.*');
 
         }
+
+        if( $request->has('p') && !empty($request->p) )
+            $posts = $posts->where('titulo_post', 'LIKE', "%".$request->p."%");
         //return dd( $posts->orderBy('posts.created_at', 'DESC')->paginate(15)[0] );
         return view('modulos.publicaciones.index', [
                 'posts' => $posts->orderBy('posts.created_at', 'DESC')->paginate(15)
