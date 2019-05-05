@@ -21,7 +21,7 @@ Route::group(['prefix' => 'user'], function(){
     Route::group([ 'middleware' => 'auth:api' ], function(){
         Route::get('me', 'usuarios\Account@me');
         Route::get('session_active', 'usuarios\Account@check');
-        Route::put('update', 'usuarios\Usuarios@edit');
+        Route::post('update', 'usuarios\Usuarios@edit');
     });
 
 });
