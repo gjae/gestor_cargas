@@ -95,9 +95,7 @@ class Account extends Controller
 	}
 	
 	public function check(){
-		return response()->json([
-			'session_active' => auth('api')->check()
-		], 200);
+		return $this->refresh();
 	}
 
     /**
@@ -109,12 +107,16 @@ class Account extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
+        $array = [
 			'error' => false,
 			'message' => 'Request accept',
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
-        ]);
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+
+        ];
+
+        $array = array_merge($array, auth('api')->user()->toArray());
+        return response()->json($array);
     }
 }

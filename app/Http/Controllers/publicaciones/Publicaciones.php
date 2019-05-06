@@ -35,7 +35,7 @@ class Publicaciones extends Controller
 		if( is_string( $request->header('Authorization', false) ) ){
 			return response()->json([
 				'error' => false,
-				'resultSet' => $posts->with(['usuario'])->orderBy('posts.created_at', 'DESC')->paginate(15),
+				'resultSet' => $posts->with(['usuario', 'categoria', 'archivos'])->orderBy('posts.created_at', 'DESC')->paginate(15),
 			], 200)->header('Content-Type', 'application/json');
 		}
 
@@ -150,7 +150,7 @@ class Publicaciones extends Controller
 	    				$nombre = '';
 	    				foreach($req->file('archivo') as $key => $archivo)
 	    				{
-	    					$nombre = md5(Carbon::now()->format('Y-m-d h:i:s A'));
+	    					$nombre = md5(Carbon::now()->format('Y-m-d h:i:s A_'.$key.'->'.$archivo->getClientOriginalName()));
 		    				$data = [
 		    					'extension' => $archivo->getClientOriginalExtension(),
 		    					'nombre_original' => $archivo->getClientOriginalName(),
