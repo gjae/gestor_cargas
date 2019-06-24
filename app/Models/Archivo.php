@@ -22,7 +22,8 @@ class Archivo extends Model
     	'jpg', 'JPG',
     	'jpeg', 'JPEG',
     	'gif', 'GIF',
-    	'pdf', 'PDFº'
+		'pdf', 'PDFº',
+		'xlsx', 'XLSX'
     ];
 
     public function post(){

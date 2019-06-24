@@ -70,7 +70,11 @@
 								<a href="{{ url('dashboard/publicaciones/publicaciones/descargar?nombre_archivo='.$archivo->nombre_archivo.'&mime='.$archivo->tipo_archivo.'&publicacion='.$post->id.'&archivo_id='.$archivo->id) }}" target="_blank" class="btn btn-success">
 									<i class="material-icons">cloud_download</i>
 								</a>
-								<iframe src="{{ app('config')->get('app')['url'].'/images/uploads/'.$archivo->nombre_archivo.'.'.$archivo->extension }}" style="width:500px; height:375px;" frameborder="0"></iframe>
+								@if ( $archivo->extension == 'xlsx' || $archivo->extension == 'xls' )
+									<img src="{{ asset('images/xlsx.png') }}" alt="" style="max-height: 250px;">
+									@else
+									<iframe src="{{ app('config')->get('app')['url'].'/images/uploads/'.$archivo->nombre_archivo.'.'.$archivo->extension }}" style="width:500px; height:375px;" frameborder="0"></iframe>
+								@endif
 							</div>
 						@endforeach
 					</div>
