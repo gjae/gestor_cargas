@@ -23,14 +23,19 @@ class Publicaciones extends Controller
             $posts = $posts->where('post_user.edo_reg', 1)
                     ->where('post_user.user_id', auth( $guard )->user()->id)
                     ->join('post_user', 'post_user.post_id', 'posts.id')
-                    ->join('users', 'users.id', 'post_user.user_id')
-                    ->select('posts.*');
+                    ->join('users', 'users.id', 'post_user.user_id');
 
         }
 
         if( $request->has('p') && !empty($request->p) )
             $posts = $posts->where('titulo_post', 'LIKE', "%".$request->p."%");
 		//return dd( $posts->orderBy('posts.created_at', 'DESC')->paginate(15)[0] );
+		if( $request->has('c') && !empty($request->c)  && $request->c != 'TODAS' ){
+			$categoria = Categoria::where('nombre_categoria', '=', $request->c)->first();
+			$cat_id = !is_null($categoria) ? $categoria->id : 0;
+
+			$posts = $posts->whereCategoriaId($cat_id);
+		}
 		
 		if( is_string( $request->header('Authorization', false) ) ){
 			return response()->json([
@@ -40,7 +45,9 @@ class Publicaciones extends Controller
 		}
 
         return view('modulos.publicaciones.index', [
-                'posts' => $posts->orderBy('posts.created_at', 'DESC')->paginate(15)
+				'posts' => $posts->select('posts.*')->orderBy('posts.created_at', 'DESC')->paginate(15),
+				'c'	=> $request->has('c') ? $request->c : 'TODAS',
+				'p'	=> $request->has('p') ? $request->p : ''
             ]);
     }
 

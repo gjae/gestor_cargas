@@ -18,7 +18,7 @@ class CreateArchivosTable extends Migration
             $table->timestamps();
             $table->string('nombre_original');
             $table->string('ruta', 130)->nullable();
-            $table->string('tipo_archivo', 40)->nullable();
+            $table->string('tipo_archivo', 110)->nullable();
             $table->string('nombre_archivo', 170);
             $table->float('tamano')->default(0);
             $table->integer('post_id')->unsigned();

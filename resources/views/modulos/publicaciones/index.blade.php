@@ -38,7 +38,7 @@
 				<span class="input-group-addon">
 					<button class="btn btn-success">Buscar</button>
 				</span>
-				<input type="text" class="form-control" name="p">
+				<input type="text" value="{{ $p }}" id="p" class="form-control" name="p">
 			</div>
 		</form>
 	</div>
@@ -49,6 +49,21 @@
 		<div class="card">
 			<div class="body">
 				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6">
+							<form action="{{ url('dashboard/publicaciones') }}" id="filter-by-categorie" method="get">
+								<div class="input-group">
+									<label for="" class="control-label">Categoría</label>
+									<select name="c" id="c" class="form-control">
+										<option {{ $c == 'TODAS' ? 'selected' : '' }} value="TODAS">Todas</option>
+										@foreach (App\Models\Categoria::all() as $categoria)
+											<option {{ $c == $categoria->nombre_categoria ? 'selected' : '' }} value="{{ $categoria->nombre_categoria }}">{{ $categoria->nombre_categoria }}</option>
+										@endforeach
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
 					<div class="row">
 						@foreach($posts as $key => $post)
 							<div class="col-sm-11 col-md-11 col-lg-11">
@@ -71,7 +86,7 @@
 								<hr>
 							</div>
 						@endforeach
-						{{ $posts->links() }}
+						{{ $posts->appends(['c' => $c, 'p' => $p])->links() }}
 					</div>
 				</div>
 			</div>
@@ -126,5 +141,18 @@
 $('#dataTables-example').DataTable({
     responsive: true
 });
+
+$("#c").on('change', e => {
+	var p = $("#p").val();
+	if(p != ""){
+		var input = document.createElement('input');
+		input.setAttribute('type', 'hidden');
+		input.setAttribute('name', 'p')
+		input.value = p;
+		document.getElementById('filter-by-categorie').appendChild(input)
+	}
+	
+	$("#filter-by-categorie").submit();
+})
 </script>
 @endsection
