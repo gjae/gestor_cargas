@@ -253,5 +253,12 @@ class Publicaciones extends Controller
     	return redirect()
     			->to( url('dashboard/publicaciones/publicaciones/ver/'.$post->slug) )
     			->with('error','EL ARCHIVO QUE INTENTA DESCARGAR NO EXISTE, O EL POST HA SIDO RETIRADO');
-    }
+	}
+	
+	public function categories()
+	{
+		$cats = Categoria::all()->toArray();
+
+		return response()->json($cats);
+	}
 }

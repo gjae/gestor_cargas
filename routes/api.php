@@ -28,5 +28,6 @@ Route::group(['prefix' => 'user'], function(){
 
 Route::group(['prefix' => 'publishers', 'middleware' => 'auth:api'], function(){
 
+    Route::get('/categories', 'publicaciones\Publicaciones@categories');
     Route::get('/all', 'publicaciones\Publicaciones@index');
 });
