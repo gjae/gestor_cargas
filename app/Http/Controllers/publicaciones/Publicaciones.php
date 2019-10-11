@@ -30,6 +30,7 @@ class Publicaciones extends Controller
         if( $request->has('p') && !empty($request->p) )
             $posts = $posts->where('titulo_post', 'LIKE', "%".$request->p."%");
 		//return dd( $posts->orderBy('posts.created_at', 'DESC')->paginate(15)[0] );
+		$categoria = null;
 		if( $request->has('c') && !empty($request->c)  && $request->c != 'TODAS' ){
 			$categoria = Categoria::where('nombre_categoria', '=', $request->c)->first();
 			$cat_id = !is_null($categoria) ? $categoria->id : 0;
@@ -38,9 +39,16 @@ class Publicaciones extends Controller
 		}
 		
 		if( is_string( $request->header('Authorization', false) ) ){
+
+			$posts = Post::whereHas('categoria', function($query) use(&$categoria){
+					if(!is_null($categoria)) return $query->whereId($categoria->id);
+					return false;
+				})->whereHas('usuarios_autorizados', function($query) use(&$guard){
+					return $query->whereUserId( auth($guard)->user()->id );
+				})->whereEdoReg(1);					
 			return response()->json([
 				'error' => false,
-				'resultSet' => $posts->with(['usuario', 'categoria', 'archivos'])->orderBy('posts.created_at', 'DESC')->paginate(15),
+				'resultSet' => $posts->with(['usuario', 'categoria' ])->orderBy('posts.created_at', 'DESC')->paginate(15),
 			], 200)->header('Content-Type', 'application/json');
 		}
 
